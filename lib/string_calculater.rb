@@ -1,8 +1,8 @@
 class StringCalculator
   def add_string(input)
-    return 'only accepts a string' unless check_string_validation(input)
+    return 'only accepts a string' unless input.is_a?(String)
     return 'invalid input' if  input =~ /,\n/
-    negatives = check_negative_values_validation(ready_to_add_numbers(input))
+    negatives = ready_to_add_numbers(input).select { |num| num < 0 }
     raise "negative numbers not allowed #{negatives}" unless negatives.empty?
     return ready_to_add_numbers(input).sum
   end
@@ -16,25 +16,18 @@ class StringCalculator
     return sum_arr
   end
 
-  def check_string_validation(input)
-    input.is_a?(String)
-  end
-
-  def check_negative_values_validation(numbers)
-    numbers.select { |num| num < 0 }
-  end
-
   def ready_to_add_numbers(input)
     if input =~ /\n/ && !input.start_with?("//")
-      input.split(/[\n,]/).map(&:to_i)
+      input_array = input.split(/[\n,]/)
     elsif input.start_with?("//")
       delimiter_end_index = input.index("\n")
       delimiter = input[2...delimiter_end_index]
       input = input[(delimiter_end_index + 1)..]
       delimiter = Regexp.escape(delimiter)
-      input.split(/#{delimiter}/).map(&:to_i) 
+      input_array = input.split(/#{delimiter}/) 
     else
-      input.split(",").map(&:to_i)
+      input_array = input.split(",")
     end
+    input_array.map(&:to_i)
   end
 end
