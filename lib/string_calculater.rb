@@ -1,5 +1,3 @@
-require 'pry-byebug'
-
 class StringCalculator
   def add_string(input)
     return 'only accepts a string' unless check_string_validation(input)
@@ -26,8 +24,14 @@ class StringCalculator
   end
 
   def ready_to_add_numbers(input)
-    if input =~ /\n/
+    if input =~ /\n/ && !input.start_with?("//")
       input.split(/[\n,]/).map(&:to_i)
+    elsif input.start_with?("//")
+      delimiter_end_index = input.index("\n")
+      delimiter = input[2...delimiter_end_index]
+      input = input[(delimiter_end_index + 1)..]
+      delimiter = Regexp.escape(delimiter)
+      input.split(/#{delimiter}/).map(&:to_i) 
     else
       input.split(",").map(&:to_i)
     end

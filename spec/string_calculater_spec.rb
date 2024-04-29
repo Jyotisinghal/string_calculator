@@ -39,5 +39,9 @@ describe "StringCalculator" do
     it "should return invalid input string separately" do
       expect(calculator.add("1,\n")).to eq(['invalid input'])
     end
+
+    it "should allow delimeters" do
+      expect(calculator.add("//;\n1;2")).to eq([3])
+    end
   end
 end
