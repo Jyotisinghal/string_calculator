@@ -19,5 +19,13 @@ describe "StringCalculator" do
     it "returns the sum of two numbers" do
       expect(calculator.add("-2,5")).to eql('negative value are not accepted')
     end
+
+    it 'should return a number if the passed string contains no delimiters' do
+      expect(calculator.add('123')).to eq (123)
+    end
+
+    # it 'should return a number if the passed string contains no delimiters' do
+    #   expect(calculator.add("123,1", "1,2")).to eq ([124, 3])
+    # end
   end
 end

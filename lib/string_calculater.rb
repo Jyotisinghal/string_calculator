@@ -5,5 +5,6 @@ class StringCalculator
     negatives = numbers.select{ |i| i < 0 }
     return 'negative value are not accepted' if negatives.length > 0
     return numbers.sum
+    
   end
 end
