@@ -2,10 +2,8 @@ require './lib/string_calculater'
 
 describe "StringCalculator" do
   describe "#add" do
-    before do
-      calculator = StringCalculator.new
-    end
-
+    let(:calculator){ StringCalculator.new }  #generating instance locally, before generates for each spec for multiple describes
+    
     it "returns 0 the sum of empty string" do
       expect(calculator.add("")).to eql(0)
     end
