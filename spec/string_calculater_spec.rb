@@ -16,8 +16,12 @@ describe "StringCalculator" do
       expect(calculator.add_string(2)).to eql('only accepts a string')
     end
 
-    it "returns the sum of two numbers" do
-      expect(calculator.add_string("-2,5")).to eql('negative value are not accepted')
+    it "raise exception for negative numbers" do
+      expect {calculator.add_string("1,-2,3") }.to raise_error("negative numbers not allowed [-2]")
+    end
+
+    it "does not raise an exception for non-negative numbers" do
+      expect { calculator.add("1,2,3") }.not_to raise_error
     end
 
     it 'should return a number if the passed string contains no delimiters' do

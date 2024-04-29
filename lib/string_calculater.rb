@@ -2,7 +2,8 @@ class StringCalculator
   def add_string(input)
     return 'only accepts a string' unless check_string_validation(input)
     return 'invalid input' if  input =~ /,\n/
-    return 'negative value are not accepted' if check_negative_values_validation(ready_to_add_numbers(input))
+    negatives = check_negative_values_validation(ready_to_add_numbers(input))
+    raise "negative numbers not allowed #{negatives}" unless negatives.empty?
     return ready_to_add_numbers(input).sum
   end
 
@@ -20,7 +21,7 @@ class StringCalculator
   end
 
   def check_negative_values_validation(numbers)
-    numbers.select{ |i| i < 0 }.length > 0
+    numbers.select { |num| num < 0 }
   end
 
   def ready_to_add_numbers(input)
