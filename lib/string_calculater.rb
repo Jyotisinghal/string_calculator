@@ -8,12 +8,16 @@ class StringCalculator
   end
 
   def add(*inputs)
-    sum_arr = []
-    inputs.map{|str| str.split(",")}.each do |input|
-      actual_input = input.join(",")
-      sum_arr << add_string(actual_input)
+    if inputs.count > 1
+      sum_arr = []
+      inputs.map{|str| str.split(",")}.each do |input|
+        actual_input = input.join(",")
+        sum_arr << add_string(actual_input)
+      end
+      return sum_arr
+    else
+      add_string(inputs.first)
     end
-    return sum_arr
   end
 
   def ready_to_add_numbers(input)
