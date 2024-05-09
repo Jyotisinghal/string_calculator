@@ -1,10 +1,12 @@
+require 'pry-byebug'
+
 class StringCalculator
   def add_string(input)
     return 'only accepts a string' unless input.is_a?(String)
     return 'invalid input' if  input =~ /,\n/
     negatives = ready_to_add_numbers(input).select { |num| num < 0 }
     raise "negative numbers not allowed #{negatives}" unless negatives.empty?
-    return ready_to_add_numbers(input).sum
+    return ready_to_add_numbers(input).inject(0){|sum, x| x <= 1000 ? sum+x : sum}
   end
 
   def add(*inputs)
@@ -21,17 +23,17 @@ class StringCalculator
   end
 
   def ready_to_add_numbers(input)
-    if input =~ /\n/ && !input.start_with?("//")
-      input_array = input.split(/[\n,]/)
-    elsif input.start_with?("//")
-      delimiter_end_index = input.index("\n")
-      delimiter = input[2...delimiter_end_index]
-      input = input[(delimiter_end_index + 1)..]
-      delimiter = Regexp.escape(delimiter)
-      input_array = input.split(/#{delimiter}/) 
-    else
-      input_array = input.split(",")
-    end
-    input_array.map(&:to_i)
+    # if input =~ /\n/ && !input.start_with?("//")
+    #   input_array = input.split(/[\n,]/)
+    # elsif input.start_with?("//")
+    #   delimiter_end_index = input.index("\n")
+    #   delimiter = input[2...delimiter_end_index]
+    #   input = input[(delimiter_end_index + 1)..]
+    #   delimiter = Regexp.escape(delimiter)
+    #   input_array = input.split(/#{delimiter}/) 
+    # else
+    #   input_array = input.split(",")
+    # end
+    input.split(/[^0-9-]+/).map(&:to_i)
   end
 end
